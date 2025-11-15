@@ -8,7 +8,7 @@ class UserRegisterForm(UserCreationForm):
         fields=["first_name","username","email","password1","password2","phone","profile"]
 
         widgets={
-            'first_name':forms.TextInput(attrs={'class':'form-control'}),
+            'first_name':forms.TextInput(attrs={'class':'form-control','id':'inputFirstName'}),
             'username':forms.TextInput(attrs={'class':'form-control'}),
             'email':forms.EmailInput(attrs={'class':'form-control'}),
             'password1':forms.PasswordInput(attrs={'class':'form-control'}),
