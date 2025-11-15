@@ -4,6 +4,7 @@ from random import randint
 
 # Create your models here.
 class User(AbstractUser):
+    email=models.EmailField(unique=True)
     option = (
         ('user','user'),
         ('staff','staff')

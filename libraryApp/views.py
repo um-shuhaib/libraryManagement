@@ -54,6 +54,52 @@ class LoginView(View):
         res = authenticate(request,username=username,password=password)
         if res:
             login(request,res)
-            return HttpResponse("login Successfull")
+            if res.role=="user":
+                return HttpResponse("User login Successfull")
+            else:
+                return redirect("dashboard")
+
         else:
             return HttpResponse("login Not Successfull")
+        
+class DashboardView(View):
+    def get(self,request):
+        return render(request,"index.html")
+    
+class MailVerifyView(View):
+    def get(self,request):
+        return render(request,"password.html")
+    
+    def post(self,request):
+        user=User.objects.get(email=request.POST.get("email"))
+        if user.is_active:
+            send_otp(user)
+            send_mail("Confirm The OTP for Restting the Password",user.otp,settings.EMAIL_HOST_USER,[user.email])
+            return redirect("otp-password")
+        else:
+            return redirect("password")
+class OtpPasswordView(View):
+    def get(self,request):
+        return render(request,"otp-password.html")
+    def post(self,request):
+        otp=request.POST.get("otp")
+        try:
+            user_instance=User.objects.get(otp=otp)
+            
+            user_instance.otp=""
+            user_instance.save()
+            return redirect("change-password",user=user_instance.id)
+        except:
+            return redirect("otp-password")
+        
+class ChangePasswordView(View):
+    def get(self,request,**kwargs):
+        return render(request,"changepassword.html")
+    def post(self,request,**kwargs):
+        user=User.objects.get(id=kwargs.get("user"))
+        user.set_password(request.POST.get("password"))        
+        user.save()
+        return redirect("login")
+
+
+    

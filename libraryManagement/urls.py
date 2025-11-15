@@ -21,6 +21,10 @@ from libraryApp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("register/",views.RegisterView.as_view(),name="register"),
-    path("register/verify",views.VerifyOTPView.as_view(),name="otpverify"),
-    path("login",views.LoginView.as_view(),name="login"),
+    path("register/verify/",views.VerifyOTPView.as_view(),name="otpverify"),
+    path("login/",views.LoginView.as_view(),name="login"),
+    path("dashboard/",views.DashboardView.as_view(),name="dashboard"),
+    path("pass-recovery/",views.MailVerifyView.as_view(),name="password"),
+    path("pass-recovery/otp",views.OtpPasswordView.as_view(),name="otp-password"),
+    path("pass-recovery/change/<int:user>",views.ChangePasswordView.as_view(),name="change-password"),
 ]
