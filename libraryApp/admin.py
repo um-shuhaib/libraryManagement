@@ -4,4 +4,12 @@ from libraryApp.models import User,Category,Book
 # Register your models here.
 admin.site.register(User)
 admin.site.register(Category)
-admin.site.register(Book)
+
+class BookModel(admin.ModelAdmin):
+    exclude=["user"]
+
+    def save_model(self, request, obj, form, change):
+        if not change:    #new add cheyyumbol ---- update cheyyumbol owner maran NOT ozhivakkiya madhi
+            obj.user=request.user
+        return super().save_model(request, obj, form, change)
+admin.site.register(Book,BookModel)

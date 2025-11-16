@@ -64,7 +64,8 @@ class LoginView(View):
         
 class DashboardView(View):
     def get(self,request):
-        return render(request,"dashboard.html")
+        books=Book.objects.filter(avl_copy__gt = 0)
+        return render(request,"dashboard.html",{"books":books})
     
 class MailVerifyView(View):
     def get(self,request):

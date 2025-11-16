@@ -35,8 +35,8 @@ class Book(models.Model):
     isbn=models.IntegerField()
     image=models.ImageField(upload_to="books",default="books/default.jpeg",null=True,blank=True)
     category=models.ManyToManyField(Category,related_name="bookCategory")
-    total_copy=models.PositiveIntegerField()
-    avl_copy=models.PositiveIntegerField()
+    total_copy=models.IntegerField()
+    avl_copy=models.IntegerField()
     added_on=models.DateField(auto_now_add=True)
 
     def __str__(self):
