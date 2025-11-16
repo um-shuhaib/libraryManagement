@@ -1,9 +1,9 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.views import View
-from libraryApp.forms import UserRegisterForm
+from libraryApp.forms import UserRegisterForm,AddBookForm
 from django.core.mail import send_mail,settings
-from libraryApp.models import User
+from libraryApp.models import User,Category,Book
 from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
@@ -101,5 +101,28 @@ class ChangePasswordView(View):
         user.save()
         return redirect("login")
 
-
+class AddCategoryView(View):
+    def get(self,request):
+        category=Category.objects.all()
+        return render(request,"addcategory.html",{"category":category})
+    def post(self,request):
+        category=request.POST.get("category")
+        Category.objects.create(category=category)
+        return redirect("category")
+        
     
+class AddBookView(View):
+    def get(self,request):
+        form=AddBookForm()
+        return render(request,"addbook.html",{"form":form})
+    def post(self,request):
+        form_instance=AddBookForm(request.POST,request.FILES)
+        total=request.POST.get("total_copy")
+        if form_instance.is_valid():
+            book=form_instance.save(commit=False)
+            book.user=request.user
+            book.avl_copy=total
+            book.save()
+            # Step 2: Save M2M categories
+            form_instance.save_m2m()
+            return redirect("book")

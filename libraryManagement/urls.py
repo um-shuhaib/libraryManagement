@@ -27,4 +27,6 @@ urlpatterns = [
     path("pass-recovery/",views.MailVerifyView.as_view(),name="password"),
     path("pass-recovery/otp",views.OtpPasswordView.as_view(),name="otp-password"),
     path("pass-recovery/change/<int:user>",views.ChangePasswordView.as_view(),name="change-password"),
+    path("addcategory/",views.AddCategoryView.as_view(),name="category"),
+    path("addbook/",views.AddBookView.as_view(),name="book"),
 ]

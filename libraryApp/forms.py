@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from libraryApp.models import User
+from libraryApp.models import User,Book
 from django import forms
 
 class UserRegisterForm(UserCreationForm):
@@ -25,3 +25,17 @@ class UserRegisterForm(UserCreationForm):
         label="Confirm Password",
         widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
+
+class AddBookForm(forms.ModelForm):
+    class Meta:
+        model=Book
+        fields=["title","author","isbn","category","total_copy","image"]
+
+        widgets={
+            'title':forms.TextInput(attrs={'class':'form-control'}),
+            'author':forms.TextInput(attrs={'class':'form-control'}),
+            'isbn':forms.TextInput(attrs={'class':'form-control'}),
+            'category':forms.SelectMultiple(attrs={'class':'form-control'}),
+            'total_copy':forms.NumberInput(attrs={'class':'form-control'}),
+
+        }
