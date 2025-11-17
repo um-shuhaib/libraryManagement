@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.views import View
-from libraryApp.forms import UserRegisterForm,AddBookForm
+from libraryApp.forms import UserRegisterForm,AddBookForm,UserUpdationForm
 from django.core.mail import send_mail,settings
 from libraryApp.models import User,Category,Book,Issue
 from django.contrib.auth import authenticate,login,logout
@@ -207,3 +207,19 @@ class ReturnAcceptView(View):
         issue.fine = 0
         issue.save()
         return redirect("issue")
+
+class UserDetailsView(View):
+    def get(self,request):
+        users=User.objects.filter(role="user")
+        return render(request,"userdetail.html",{"users":users})
+class UserUpdateView(View):
+    def get(self,request,**kwargs):
+        user=User.objects.get(id=kwargs.get("id"))
+        form=UserUpdationForm(instance=user)
+        return render(request,"updateuser.html",{"form":form})
+    def post(self,request,**kwargs):
+        user=User.objects.get(id=kwargs.get("id"))
+        form_instance=UserUpdationForm(request.POST,request.FILES,instance=user)
+        if form_instance.is_valid():
+            form_instance.save()
+            return redirect("user")

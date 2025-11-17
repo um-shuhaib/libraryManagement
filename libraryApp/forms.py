@@ -39,3 +39,15 @@ class AddBookForm(forms.ModelForm):
             'total_copy':forms.NumberInput(attrs={'class':'form-control'}),
 
         }
+class UserUpdationForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=["first_name","username","email","phone","profile"]
+
+        widgets={
+            'first_name':forms.TextInput(attrs={'class':'form-control','id':'inputFirstName'}),
+            'username':forms.TextInput(attrs={'class':'form-control'}),
+            'email':forms.EmailInput(attrs={'class':'form-control'}),
+            'phone':forms.TextInput(attrs={'class':'form-control'}),
+            'profile':forms.FileInput(attrs={'class':'form-control'}),
+        }

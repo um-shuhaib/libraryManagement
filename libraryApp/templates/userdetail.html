@@ -1,0 +1,63 @@
+{% extends 'dashboard.html' %}
+
+{% block main %}
+<div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
+    
+
+    <div class="container-fluid px-4">
+        <div id="section-table" class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                List Of Users
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple" class="datatable">
+                    <thead>
+                        <tr>
+                            <th>Profile</th>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Options</th>
+
+
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Profile</th>
+                            <th>Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Options</th>
+
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>
+                                <img src="{{user.profile.url}}" height="50px" width="45px" alt="img">
+                            </td>
+                            <td>{{user.first_name}}</td>
+                            <td>{{user.username}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.phone}}</td>
+                            <td>
+                                <a href="{% url 'userupdate' user.id %}" class="btn btn-primary">Update</a>
+                                <a href="" class="btn btn-danger">Delete</a>
+                            </td>
+
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

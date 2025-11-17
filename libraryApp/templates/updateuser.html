@@ -1,0 +1,25 @@
+{% extends 'dashboard.html' %}
+
+{% block main %}
+                <div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
+                    <p class="display-4">Update User</p>
+                    <div class="">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <label for="title" class="form-label fw-bold ">Name</label>
+                            {{form.first_name}}
+                            <label for="author" class="form-label fw-bold ">Username</label>
+                            {{form.username}}
+                            <label for="isbn" class="form-label fw-bold ">Email</label>
+                            {{form.email}}
+                            <label for="category" class="form-label fw-bold ">Phone</label>
+                            {{form.phone}}
+                            <label for="copies" class="form-label fw-bold ">Upload Photo</label>
+                            {{form.profile}}
+                            <input type="submit" name="" id="" class="btn btn-primary m-3">
+                        </form>
+                    </div>
+
+                </div>
+                
+{% endblock %}
