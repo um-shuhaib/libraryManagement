@@ -61,7 +61,7 @@
                             <td>{{user.email}}</td>
                             <td>{{user.phone}}</td>
                             <td>
-                                <a href="" class="btn btn-primary">Issue Book</a>
+                                <a href="{% url 'issued' user.id book.id %}" class="btn btn-primary">Issue Book</a>
                             </td>
 
 

@@ -5,7 +5,7 @@ from libraryApp.forms import UserRegisterForm,AddBookForm
 from django.core.mail import send_mail,settings
 from libraryApp.models import User,Category,Book,Issue
 from django.contrib.auth import authenticate,login,logout
-
+from datetime import date, timedelta
 # Create your views here.
 def send_otp(user_instance):
     user_instance.generate_otp()
@@ -64,7 +64,7 @@ class LoginView(View):
         
 class DashboardView(View):
     def get(self,request):
-        books=Book.objects.filter(avl_copy__gt = 0)
+        books=Book.objects.all()
         return render(request,"dashboard.html",{"books":books})
     
 class MailVerifyView(View):
@@ -115,7 +115,8 @@ class AddCategoryView(View):
 class AddBookView(View):
     def get(self,request):
         form=AddBookForm()
-        return render(request,"addbook.html",{"form":form})
+        books=Book.objects.all()
+        return render(request,"addbook.html",{"form":form,"books":books})
     def post(self,request):
         form_instance=AddBookForm(request.POST,request.FILES)
         total=request.POST.get("total_copy")
@@ -139,3 +140,35 @@ class IssueUserView(View):
         book=Book.objects.get(id=kwargs.get("id"))
         users=User.objects.filter(role="user")
         return render(request,"issueuser.html",{"book":book,"users":users})
+        
+
+class IssuedView(View):
+    def get(self,request,**kwargs):
+        book=Book.objects.get(id=kwargs.get("book_id"))
+        user=User.objects.get(id=kwargs.get("user_id"))
+        Issue.objects.create(user=user,book=book,due_date=date.today() + timedelta(days=7))
+        book.avl_copy -= 1
+        book.save()
+        return redirect("issue")
+
+class UpdateBookView(View):
+    def get(self,request,**kwargs):
+        book=Book.objects.get(id=kwargs.get("id"))
+        form=AddBookForm(instance=book)
+        return render(request,"updatebook.html",{"form":form})
+    def post(self,request,**kwargs):
+        book=Book.objects.get(id=kwargs.get("id"))
+        form_instance=AddBookForm(request.POST,request.FILES,instance=book)
+        if form_instance.is_valid():
+            book=form_instance.save(commit=False)
+            book.user=request.user
+            book.save()
+            form_instance.save_m2m()
+            return redirect("book")
+        
+class DeleteBookView(View):
+    def get(self,request,**kwargs):
+        book=Book.objects.get(id=kwargs.get("id"))
+        book.delete()
+        return redirect("book")
+    

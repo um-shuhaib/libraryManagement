@@ -23,4 +23,70 @@
                     </div>
 
                 </div>
+                <div class="container-fluid px-4">
+                    <div id="section-table" class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            List Of All Books
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple" class="datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>ISBN</th>
+                                        <th>Category</th>
+                                        <th>Total Copy</th>
+                                        <th>Available Copy</th>
+                                        <th>Added By</th>
+                                        <th>Added On</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>ISBN</th>
+                                        <th>Category</th>
+                                        <th>Total Copy</th>
+                                        <th>Available Copy</th>
+                                        <th>Added By</th>
+                                        <th>Added On</th>
+                                        <th>Options</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {% for book in books %}
+                                    <tr>
+                                        <td>
+                                            <img src="{{book.image.url}}"  height="50px" width="45px" alt="img">
+                                        </td>
+                                        <td>{{book.title}}</td>
+                                        <td>{{book.author}}</td>
+                                        <td>{{book.isbn}}</td>
+                                        <td>
+                                            {% for cat in book.category.all %}
+                                                {{ cat.category }}{% if not forloop.last %}, {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <td>{{book.total_copy}}</td>
+                                        <td>{{book.avl_copy}}</td>
+                                        <td>{{book.user}}</td>
+                                        <td>{{book.added_on}}</td>
+                                        <td>
+                                            <a href="{% url 'update' book.id %}" class="btn btn-primary">Update</a>
+                                            <a href="{% url 'delete' book.id %}" class="btn btn-danger">Delete</a>
+                                        </td>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 {% endblock %}
