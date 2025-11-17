@@ -47,7 +47,7 @@
                             <td>{{user.phone}}</td>
                             <td>
                                 <a href="{% url 'userupdate' user.id %}" class="btn btn-primary">Update</a>
-                                <a href="" class="btn btn-danger">Delete</a>
+                                <a href="{% url 'userdelete' user.id %}" class="btn btn-danger">Delete</a>
                             </td>
 
 

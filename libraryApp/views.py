@@ -223,3 +223,8 @@ class UserUpdateView(View):
         if form_instance.is_valid():
             form_instance.save()
             return redirect("user")
+class DeleteUserView(View):
+    def get(self,request,**kwargs):
+        user=User.objects.get(id=kwargs.get("id"))
+        user.delete()
+        return redirect("user")

@@ -42,5 +42,6 @@ urlpatterns = [
     path("return/accept/<int:id>",views.ReturnAcceptView.as_view(),name="acceptreturn"),
     path("user/",views.UserDetailsView.as_view(),name="user"),
     path("user/update/<int:id>",views.UserUpdateView.as_view(),name="userupdate"),
+    path("user/delete/<int:id>",views.DeleteUserView.as_view(),name="userdelete"),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
