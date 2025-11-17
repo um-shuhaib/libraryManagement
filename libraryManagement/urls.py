@@ -31,5 +31,7 @@ urlpatterns = [
     path("pass-recovery/change/<int:user>",views.ChangePasswordView.as_view(),name="change-password"),
     path("addcategory/",views.AddCategoryView.as_view(),name="category"),
     path("addbook/",views.AddBookView.as_view(),name="book"),
+    path("issue/",views.IssueBookView.as_view(),name="issue"),
+    path("issue/user/<int:id>",views.IssueUserView.as_view(),name="issueuser"),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

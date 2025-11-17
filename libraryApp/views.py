@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views import View
 from libraryApp.forms import UserRegisterForm,AddBookForm
 from django.core.mail import send_mail,settings
-from libraryApp.models import User,Category,Book
+from libraryApp.models import User,Category,Book,Issue
 from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
@@ -127,3 +127,15 @@ class AddBookView(View):
             # Step 2: Save M2M categories
             form_instance.save_m2m()
             return redirect("book")
+
+class IssueBookView(View):
+    def get(self, request):
+        books=Book.objects.filter(avl_copy__gt = 0)
+        issued=Issue.objects.all()
+        return render(request,"issuebook.html",{"books":books,"issued":issued})
+
+class IssueUserView(View):
+    def get(self,request,**kwargs):
+        book=Book.objects.get(id=kwargs.get("id"))
+        users=User.objects.filter(role="user")
+        return render(request,"issueuser.html",{"book":book,"users":users})

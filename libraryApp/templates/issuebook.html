@@ -1,0 +1,125 @@
+{% extends 'dashboard.html' %}
+
+{% block main %}
+                <div class="container-fluid px-4">
+                    <div id="section-table" class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            List Of Available Books
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple" class="datatable">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>ISBN</th>
+                                        <th>Category</th>
+                                        <!-- <th>Total Copy</th> -->
+                                        <th>Available Copy</th>
+                                        <!-- <th>Added By</th> -->
+                                        <th>Options</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>ISBN</th>
+                                        <th>Category</th>
+                                        <!-- <th>Total Copy</th> -->
+                                        <th>Available Copy</th>
+                                        <!-- <th>Added By</th> -->
+                                        <th>Options</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {% for book in books %}
+                                    <tr>
+                                        <td>
+                                            <img src="{{book.image.url}}"  height="50px" width="45px" alt="img">
+                                        </td>
+                                        <td>{{book.title}}</td>
+                                        <td>{{book.author}}</td>
+                                        <td>{{book.isbn}}</td>
+                                        <td>
+                                            {% for cat in book.category.all %}
+                                                {{ cat.category }}{% if not forloop.last %}, {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                        <!-- <td>{{book.total_copy}}</td> -->
+                                        <td>{{book.avl_copy}}</td>
+                                        <!-- <td>{{book.user}}</td> -->
+                                        <td>
+                                            <a href="{% url 'issueuser' book.id %}" class="btn btn-primary">Issue Book</a>
+                                        </td>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div id="section-issue" class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            List Of Issued Books
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple1" class="datatable">
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Book</th>
+                                        <th>Issued</th>
+                                        <th>ISBN</th>
+                                        <th>Due Date</th>
+                                        <!-- <th>Total Copy</th> -->
+                                        <th>Returned</th>
+                                        <th>Fine</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Book</th>
+                                        <th>Issued</th>
+                                        <th>ISBN</th>
+                                        <th>Due Date</th>
+                                        <!-- <th>Total Copy</th> -->
+                                        <th>Returned</th>
+                                        <th>Fine</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    {% for issue in issued %}
+                                    <tr>
+                                        <td>{{issue.user}}</td>
+                                        <td>{{issue.book}}</td>
+                                        <td>{{issue.issue_date}}</td>
+                                        <td>{{issue.due_date}}</td>
+                                        <td>{{issue.returned_date}}</td>
+                                        <td>{{issue.fine}}</td>
+                                        <td>{{issue.status}}</td>
+                                        
+                                        <td>
+                                            <a href="#" class="btn btn-primary">Issue Book</a>
+                                        </td>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                
+
+{% endblock %}

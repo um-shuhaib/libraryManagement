@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from random import randint
+from datetime import date
+
 
 # Create your models here.
 class User(AbstractUser):
@@ -41,3 +43,22 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+class Issue(models.Model):
+    STATUS = (
+        ('issued', 'Issued'),
+        ('returned', 'Returned'),
+        ('overdue', 'Overdue'),
+    )
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="issued_by")
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="issued_book")
+    issue_date = models.DateField(auto_now_add=True)
+    due_date = models.DateField()
+    returned_date = models.DateField(null=True, blank=True)
+    fine = models.IntegerField(default=0)
+    status = models.CharField(max_length=10, choices=STATUS, default="issued")
+
+    def __str__(self):
+        return f"{self.book.title} → {self.user.username}"
+

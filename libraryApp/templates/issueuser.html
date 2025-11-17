@@ -1,0 +1,77 @@
+{% extends 'dashboard.html' %}
+
+{% block main %}
+<div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
+    <div class="d-flex ">
+        <div class=" d-flex flex-column justify-content-center align-items-center">
+            <img src="{{book.image.url}}" height="200pxpx" width="150pxpx" alt="img">
+            <p class="fw-bolder">{{book.title}}</p>
+        </div>
+        <div>
+            <div class="ms-5 d-flex flex-column justify-content-center align-items-cente py-4">
+                <p><span class="fw-bold">Author</span> : {{book.author}}</p>
+                <p><span class="fw-bold">Category</span> : {% for cat in book.category.all %}
+                    {{ cat.category }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}</p>
+            
+                <p><span class="fw-bold">ISBN</span> : {{book.isbn}}</p>
+                <p><span class="fw-bold">Status</span> : {% if book.avl_copy > 0 %} <span
+                        class="text-success">Available</span> {% else %} <span class="text-danger">Not Available</span>
+                    {% endif %}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid px-4">
+        <div id="section-table" class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                List Of Users
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple" class="datatable">
+                    <thead>
+                        <tr>
+                            <th>Profile</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Options</th>
+
+
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Profile</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Options</th>
+
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>
+                                <img src="{{user.profile.url}}" height="50px" width="45px" alt="img">
+                            </td>
+                            <td>{{user.first_name}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.phone}}</td>
+                            <td>
+                                <a href="" class="btn btn-primary">Issue Book</a>
+                            </td>
+
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from libraryApp.models import User,Category,Book
+from libraryApp.models import User,Category,Book,Issue
 
 # Register your models here.
 admin.site.register(User)
@@ -13,3 +13,6 @@ class BookModel(admin.ModelAdmin):
             obj.user=request.user
         return super().save_model(request, obj, form, change)
 admin.site.register(Book,BookModel)
+admin.site.register(Issue)
+
+

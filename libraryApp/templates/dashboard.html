@@ -62,7 +62,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Add Cetegory
                         </a>
-                        <a class="nav-link" href="index.html">
+                        <a class="nav-link" href="{% url 'issue' %}">
                             <div class="sb-nav-link-icon"><i class="fa fa-handshake"></i></div>
                             Issue Details
                         </a>
@@ -150,7 +150,7 @@
                             List Of Available Books
                         </div>
                         <div class="card-body">
-                            <table id="datatablesSimple">
+                            <table id="datatablesSimple" class="datatable">
                                 <thead>
                                     <tr>
                                         <th>Image</th>
@@ -186,7 +186,11 @@
                                         <td>{{book.title}}</td>
                                         <td>{{book.author}}</td>
                                         <td>{{book.isbn}}</td>
-                                        <td>{{book.category}}</td>
+                                        <td>
+                                            {% for cat in book.category.all %}
+                                                {{ cat.category }}{% if not forloop.last %}, {% endif %}
+                                            {% endfor %}
+                                        </td>
                                         <td>{{book.total_copy}}</td>
                                         <td>{{book.avl_copy}}</td>
                                         <td>{{book.user}}</td>
@@ -224,6 +228,17 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
         crossorigin="anonymous"></script>
     <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Initialize ALL tables with class="datatable"
+    document.querySelectorAll('.datatable').forEach(function(table) {
+        new simpleDatatables.DataTable(table);
+    });
+
+});
+</script>
 </body>
 
 </html>
