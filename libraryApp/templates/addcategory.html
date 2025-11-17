@@ -17,6 +17,8 @@
                         <div class="card border-0 text-light" style="width: 12rem;">
                             <div class="card-body bg-primary ms-1 me-1">
                                 <h3 class="card-title text-center">{{category.category}}</h3>
+                                <a href="{% url 'edit' category.id %}" class="btn text-light">Edit</a>
+                                <a href="{% url 'deletecategory' category.id %}" class="btn text-light">Delete</a>
 
                             </div>
                         </div>

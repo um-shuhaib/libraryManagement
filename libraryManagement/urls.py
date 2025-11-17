@@ -36,5 +36,7 @@ urlpatterns = [
     path("issue/issued/<int:user_id>/<int:book_id>",views.IssuedView.as_view(),name="issued"),
     path("updatebook/<int:id>",views.UpdateBookView.as_view(),name="update"),
     path("deletebook/<int:id>",views.DeleteBookView.as_view(),name="delete"),
+    path("editcategory/<int:id>",views.EditCategoryView.as_view(),name="edit"),
+    path("deletecategory/<int:id>",views.DeleteCategoryView.as_view(),name="deletecategory"),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

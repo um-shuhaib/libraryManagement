@@ -172,3 +172,19 @@ class DeleteBookView(View):
         book.delete()
         return redirect("book")
     
+class EditCategoryView(View):
+    def get(self,request,**kwargs):
+        category=Category.objects.get(id=kwargs.get("id"))
+        return render(request,"editcategory.html",{"category":category})
+    def post(self,request,**kwargs):
+        category=Category.objects.get(id=kwargs.get("id"))
+        cat=request.POST.get("category")
+        category.category=cat
+        category.save()
+        return redirect("category")
+
+class DeleteCategoryView(View):
+    def get(self,request,**kwargs):
+        cat=Category.objects.get(id=kwargs.get("id"))
+        cat.delete()
+        return redirect("category")
