@@ -188,3 +188,22 @@ class DeleteCategoryView(View):
         cat=Category.objects.get(id=kwargs.get("id"))
         cat.delete()
         return redirect("category")
+class returnBookView(View):
+    def get(self,request,**kwargs):
+        issue=Issue.objects.get(id=kwargs.get("id"))
+        if date.today() > issue.due_date and issue.status != "returned":
+            days = (date.today() - issue.due_date).days
+            issue.fine = days * 5
+            issue.status = "overdue"
+            issue.save()
+        history=Issue.objects.filter(user=issue.user)
+        return render(request,"return.html",{"issue":issue,"history":history})
+
+class ReturnAcceptView(View):
+    def get(self,request,**kwargs):
+        issue=Issue.objects.get(id=kwargs.get("id"))
+        issue.status="returned"
+        issue.returned_date=date.today()
+        issue.fine = 0
+        issue.save()
+        return redirect("issue")

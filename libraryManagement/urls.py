@@ -38,5 +38,7 @@ urlpatterns = [
     path("deletebook/<int:id>",views.DeleteBookView.as_view(),name="delete"),
     path("editcategory/<int:id>",views.EditCategoryView.as_view(),name="edit"),
     path("deletecategory/<int:id>",views.DeleteCategoryView.as_view(),name="deletecategory"),
+    path("return/<int:id>",views.returnBookView.as_view(),name="return"),
+    path("return/accept/<int:id>",views.ReturnAcceptView.as_view(),name="acceptreturn"),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,84 @@
+{% extends 'dashboard.html' %}
+
+{% block main %}
+<div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
+    <h3>Returning Book Details</h3>
+    <div class="d-flex ">
+        <div class=" d-flex flex-column justify-content-center align-items-center">
+            <img src="{{issue.book.image.url}}" height="200pxpx" width="150pxpx" alt="img">
+            <p class="fw-bolder">{{issue.book.title}}</p>
+        </div>
+        <div>
+            <div class="ms-5 d-flex flex-column justify-content-center align-items-cente py-4">
+                <p><span class="fw-bold">Issued</span> : {{issue.user}}</p>
+                <p><span class="fw-bold">Author</span> : {{issue.book.author}}</p>
+                <p><span class="fw-bold">Category</span> : {% for cat in issue.book.category.all %}
+                    {{ cat.category }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}</p>
+
+                <p><span class="fw-bold">ISBN</span> : {{issue.book.isbn}}</p>
+                <p><span class="fw-bold">Fine</span> : {% if issue.fine > 0 %} <span
+                    class="text-danger">{{issue.fine}}</span> {% else %} <span class="text-success">No Fine</span>
+                    {% endif %}</p>
+                <p><span class="fw-bold">Status</span> : {{issue.status}}</p>
+                </div>
+        </div>
+    </div>
+    <a href="{% url 'acceptreturn' issue.id %}" class="btn btn-secondary">Return</a>
+
+</div>
+<div class="container-fluid px-4">
+        <div id="section-table" class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                History Of {{issue.user}}
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple" class="datatable">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>ISBN</th>
+                            <th>Issued</th>
+                            <th>Due</th>
+                            <th>Returned</th>
+                            <th>status</th>
+
+
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>ISBN</th>
+                            <th>Issued</th>
+                            <th>Due</th>
+                            <th>Returned</th>
+                            <th>status</th>
+
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for issue in history %}
+                        <tr>
+                            
+                            <td>{{issue.book}}</td>
+                            <td>{{issue.book.author}}</td>
+                            <td>{{issue.book.isbn}}</td>
+                            <td>{{issue.issue_date}}</td>
+                            <td>{{issue.due_date}}</td>
+                            <td>{{issue.returned_date}}</td>
+                            <td>{{issue.status}}</td>
+                            
+
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
