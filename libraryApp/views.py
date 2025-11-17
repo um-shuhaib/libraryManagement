@@ -228,3 +228,25 @@ class DeleteUserView(View):
         user=User.objects.get(id=kwargs.get("id"))
         user.delete()
         return redirect("user")
+    
+class LogoutView(View):
+    def get(self,request):
+        logout(request)
+        return redirect("login")
+class ProfileView(View):
+    def get(self,request):
+        user=request.user
+        history=Issue.objects.filter(user=user)
+        return render(request,"profile.html",{"user":user,"history":history})
+    
+class ProfileUpdateView(View):
+    def get(self,request,**kwargs):
+        user=User.objects.get(id=kwargs.get("id"))
+        form=UserUpdationForm(instance=user)
+        return render(request,"updateuser.html",{"form":form})
+    def post(self,request,**kwargs):
+        user=User.objects.get(id=kwargs.get("id"))
+        form_instance=UserUpdationForm(request.POST,request.FILES,instance=user)
+        if form_instance.is_valid():
+            form_instance.save()
+            return redirect("profile")

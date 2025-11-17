@@ -43,5 +43,8 @@ urlpatterns = [
     path("user/",views.UserDetailsView.as_view(),name="user"),
     path("user/update/<int:id>",views.UserUpdateView.as_view(),name="userupdate"),
     path("user/delete/<int:id>",views.DeleteUserView.as_view(),name="userdelete"),
+    path("logout/",views.LogoutView.as_view(),name="logout"),
+    path("profile/",views.ProfileView.as_view(),name="profile"),
+    path("profile/update/<int:id>",views.ProfileUpdateView.as_view(),name="profileupdate"),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
