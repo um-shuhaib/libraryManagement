@@ -10,7 +10,7 @@
         </div>
         <div>
             <div class="ms-5 d-flex flex-column justify-content-center align-items-cente py-4">
-                <p><span class="fw-bold">Issued</span> : {{issue.user}}</p>
+                <p><span class="fw-bold">Issued</span> : {{issue.user}} (+91 {{issue.user.phone}})</p>
                 <p><span class="fw-bold">Author</span> : {{issue.book.author}}</p>
                 <p><span class="fw-bold">Category</span> : {% for cat in issue.book.category.all %}
                     {{ cat.category }}{% if not forloop.last %}, {% endif %}
