@@ -1,7 +1,7 @@
 {% extends 'dashboard.html' %}
 
 {% block main %}
-                <div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
+                <!-- <div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
                     <p class="display-4">Update User</p>
                     <div class="">
                         <form action="" method="post" enctype="multipart/form-data">
@@ -20,6 +20,64 @@
                         </form>
                     </div>
 
+                </div> -->
+                <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+
+    <div class="card shadow-lg p-4" style="width: 480px; border-radius: 15px;">
+        
+        <h2 class="text-center fw-bold mb-4">Update User</h2>
+
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Existing Photo Preview -->
+            {% if form.instance.profile %}
+                <div class="text-center mb-3">
+                    <img src="{{ form.instance.profile.url }}" 
+                         class="rounded-circle shadow-sm"
+                         style="height: 120px; width: 120px; object-fit: cover;">
                 </div>
+            {% endif %}
+
+            <!-- Name -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Name</label>
+                {{ form.first_name }}
+            </div>
+
+            <!-- Username -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Username</label>
+                {{ form.username }}
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Email</label>
+                {{ form.email }}
+            </div>
+
+            <!-- Phone -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Phone</label>
+                {{ form.phone }}
+            </div>
+
+            <!-- Profile Photo -->
+            <div class="mb-3">
+                <label class="form-label fw-bold">Upload Photo</label>
+                {{ form.profile }}
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-primary px-5 py-2">Update</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
                 
 {% endblock %}

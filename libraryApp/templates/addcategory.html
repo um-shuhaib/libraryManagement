@@ -26,47 +26,52 @@
 
                     </div>
                 </div> -->
+
+
+
 <div class="container py-5">
 
-    <!-- Add Category Card -->
-    <div class="row justify-content-center">
+    <!-- Add Category Form -->
+    <div class="row justify-content-center mb-5">
         <div class="col-md-6">
-
-            <div class="card shadow-sm p-4 mb-5" style="border-radius: 12px;">
-                <h2 class="text-center fw-bold mb-4">Add New Category</h2>
+            <div class="card shadow-lg p-4" style="border-radius: 15px;">
+                <h3 class="text-center fw-bold mb-4">Add New Category</h3>
 
                 <form action="" method="post">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <input type="text" name="category" id="category" class="form-control form-control-lg"
-                            placeholder="Enter category name" required>
+                        <input type="text" 
+                               name="category" 
+                               id="category" 
+                               class="form-control form-control-lg"
+                               placeholder="Enter category name" required>
                     </div>
 
                     <div class="text-center">
-                        <button class="btn btn-primary px-5">Add</button>
+                        <button class="btn btn-primary px-5 py-2">Add Category</button>
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 
 
-    <!-- Category List Section -->
+    <!-- Category List -->
     <h2 class="text-center fw-bold mb-4">Categories</h2>
 
     <div class="row g-4 justify-content-center">
 
         {% for c in category %}
-        <div class="col-md-3 px-5">
-            <div class="card shadow-sm border-0 " style="border-radius: 12px;">
-                <div class="card-body text-center bg-secondary text-white" style="border-radius: 12px;">
+        <div class="col-md-3 col-sm-6">
+            <div class="card shadow-sm border-0 h-100" style="border-radius: 12px;">
+                <div class="card-body bg-primary text-white text-center" style="border-radius: 12px;">
 
-                    <h4 class="mb-3 fw-bold">{{ c.category }}</h4>
+                    <h4 class="fw-bold">{{ c.category }}</h4>
 
-                    <div class="d-flex justify-content-center gap-3">
-                        <a href="{% url 'edit' c.id %}" class="btn btn-light btn-sm px-4">Edit</a>
-                        <a href="{% url 'deletecategory' c.id %}" class="btn btn-outline-light btn-sm px-4">Delete</a>
+                    <div class="d-flex justify-content-center gap-3 mt-3">
+                        <a href="{% url 'edit' c.id %}" class="btn btn-light btn-sm px-4 fw-bold">Edit</a>
+                        <a href="{% url 'deletecategory' c.id %}" 
+                           class="btn btn-outline-light btn-sm px-4 fw-bold">Delete</a>
                     </div>
 
                 </div>
@@ -74,8 +79,15 @@
         </div>
         {% endfor %}
 
+        {% if category|length == 0 %}
+        <div class="text-center text-muted mt-4">
+            <p>No categories available.</p>
+        </div>
+        {% endif %}
+
     </div>
 
 </div>
+
 
 {% endblock %}
