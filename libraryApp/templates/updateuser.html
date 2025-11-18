@@ -1,7 +1,7 @@
 {% extends 'dashboard.html' %}
 
 {% block main %}
-                <!-- <div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
+<!-- <div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
                     <p class="display-4">Update User</p>
                     <div class="">
                         <form action="" method="post" enctype="multipart/form-data">
@@ -21,10 +21,10 @@
                     </div>
 
                 </div> -->
-                <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
 
-    <div class="card shadow-lg p-4" style="width: 480px; border-radius: 15px;">
-        
+    <div class="card shadow-lg p-4 mt-5 mb-4" style="width: 480px; border-radius: 15px;">
+
         <h2 class="text-center fw-bold mb-4">Update User</h2>
 
         <form action="" method="post" enctype="multipart/form-data">
@@ -32,11 +32,10 @@
 
             <!-- Existing Photo Preview -->
             {% if form.instance.profile %}
-                <div class="text-center mb-3">
-                    <img src="{{ form.instance.profile.url }}" 
-                         class="rounded-circle shadow-sm"
-                         style="height: 120px; width: 120px; object-fit: cover;">
-                </div>
+            <div class="text-center mb-3">
+                <img src="{{ form.instance.profile.url }}" class="rounded-circle shadow-sm"
+                    style="height: 120px; width: 120px; object-fit: cover;">
+            </div>
             {% endif %}
 
             <!-- Name -->
@@ -79,5 +78,5 @@
 
 </div>
 
-                
+
 {% endblock %}

@@ -1,8 +1,8 @@
 {% extends 'dashboard.html' %}
 
 {% block main %}
-<div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
-    <div class="container mt-4">
+<div class="d-flex flex-column w-100 min-vh-100 align-items-center justify-content-center">
+    <div class="container mt-5">
 
         <div class="card shadow-lg p-4" style="max-width: 450px; margin:auto;">
 
@@ -35,7 +35,7 @@
 
 
 
-        <div id="section-table" class="card mb-4">
+        <div id="section-table" class="card mb-5 mt-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
                 History Of {{request.user}}
