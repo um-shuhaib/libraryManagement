@@ -15,7 +15,7 @@
 </head>
 
 <body class="sb-nav-fixed">
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <nav class="sb-topnav navbar navbar-expand navbar-light bg-light">
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="{% url 'dashboard' %}">Library Management</a>
         <!-- Sidebar Toggle-->
@@ -48,7 +48,7 @@
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Core</div>
@@ -129,7 +129,7 @@
                         <div class="col-xl-3 col-md-6">
                             <a href="#section-table">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body fw-bolder">{{total_copies}}</div>
+                                    <div class="card-body fw-bolder fs-2">{{total_copies}}</div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <p class="small text-white">Total Books</p>
                                         <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
@@ -140,7 +140,7 @@
 
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-success text-white mb-4">
-                                <div class="card-body fw-bolder">{{avl_books}}</div>
+                                <div class="card-body fw-bolder fs-2">{{avl_books}}</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <p class="small text-white">Availbale Books</p>
                                     <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
@@ -149,7 +149,7 @@
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">{{issued_books}}</div>
+                                <div class="card-body fw-bold fs-2">{{issued_books}}</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <p class="small text-white">Issued Books</p>
                                     <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
@@ -158,7 +158,7 @@
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-danger text-white mb-4">
-                                <div class="card-body">{{overdue_books}}</div>
+                                <div class="card-body fw-bold fs-2">{{overdue_books}}</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <p class="small text-white">Overdues</p>
                                     <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
