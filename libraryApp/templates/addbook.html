@@ -1,92 +1,118 @@
 {% extends 'dashboard.html' %}
 
 {% block main %}
-                <div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
-                    <p class="display-4">Add Book</p>
-                    <div class="">
-                        <form action="" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <label for="title" class="form-label fw-bold ">Title</label>
-                            {{form.title}}
-                            <label for="author" class="form-label fw-bold ">Author</label>
-                            {{form.author}}
-                            <label for="isbn" class="form-label fw-bold ">ISBN</label>
-                            {{form.isbn}}
-                            <label for="category" class="form-label fw-bold ">Select Category</label>
-                            {{form.category}}
-                            <label for="copies" class="form-label fw-bold ">Total Copy</label>
-                            {{form.total_copy}}
-                            <label for="image" class="form-label fw-bold ">Upload Image</label>
-                            {{form.image}}
-                            <input type="submit" name="" id="" class="btn btn-primary m-3">
-                        </form>
-                    </div>
 
-                </div>
-                <div class="container-fluid px-4">
-                    <div id="section-table" class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            List Of All Books
-                        </div>
-                        <div class="card-body">
-                            <table id="datatablesSimple" class="datatable">
-                                <thead>
-                                    <tr>
-                                        <th>Image</th>
-                                        <th>Title</th>
-                                        <th>Author</th>
-                                        <th>ISBN</th>
-                                        <th>Category</th>
-                                        <th>Total Copy</th>
-                                        <th>Available Copy</th>
-                                        <th>Added By</th>
-                                        <th>Added On</th>
-                                        <th>Options</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Image</th>
-                                        <th>Title</th>
-                                        <th>Author</th>
-                                        <th>ISBN</th>
-                                        <th>Category</th>
-                                        <th>Total Copy</th>
-                                        <th>Available Copy</th>
-                                        <th>Added By</th>
-                                        <th>Added On</th>
-                                        <th>Options</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    {% for book in books %}
-                                    <tr>
-                                        <td>
-                                            <img src="{{book.image.url}}"  height="50px" width="45px" alt="img">
-                                        </td>
-                                        <td>{{book.title}}</td>
-                                        <td>{{book.author}}</td>
-                                        <td>{{book.isbn}}</td>
-                                        <td>
-                                            {% for cat in book.category.all %}
-                                                {{ cat.category }}{% if not forloop.last %}, {% endif %}
-                                            {% endfor %}
-                                        </td>
-                                        <td>{{book.total_copy}}</td>
-                                        <td>{{book.avl_copy}}</td>
-                                        <td>{{book.user}}</td>
-                                        <td>{{book.added_on}}</td>
-                                        <td>
-                                            <a href="{% url 'update' book.id %}" class="btn btn-primary">Update</a>
-                                            <a href="{% url 'delete' book.id %}" class="btn btn-danger">Delete</a>
-                                        </td>
-                                        
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+<div class="container-fluid px-4 mt-3">
+    <div id="section-table" class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            List Of All Books
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple" class="datatable">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>ISBN</th>
+                        <th>Category</th>
+                        <th>Total Copy</th>
+                        <th>Available Copy</th>
+                        <th>Added By</th>
+                        <th>Added On</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>ISBN</th>
+                        <th>Category</th>
+                        <th>Total Copy</th>
+                        <th>Available Copy</th>
+                        <th>Added By</th>
+                        <th>Added On</th>
+                        <th>Options</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for book in books %}
+                    <tr>
+                        <td>
+                            <img src="{{book.image.url}}" height="50px" width="45px" alt="img">
+                        </td>
+                        <td>{{book.title}}</td>
+                        <td>{{book.author}}</td>
+                        <td>{{book.isbn}}</td>
+                        <td>
+                            {% for cat in book.category.all %}
+                            {{ cat.category }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{book.total_copy}}</td>
+                        <td>{{book.avl_copy}}</td>
+                        <td>{{book.user}}</td>
+                        <td>{{book.added_on}}</td>
+                        <td>
+                            <a href="{% url 'update' book.id %}" class="btn btn-primary">Update</a>
+                            <a href="{% url 'delete' book.id %}" class="btn btn-danger">Delete</a>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card  p-4 w-75" style=" border-radius: 12px;">
+
+        <h2 class="text-center mb-4 fw-bold">Add Book</h2>
+
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Title</label>
+                {{ form.title }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Author</label>
+                {{ form.author }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">ISBN</label>
+                {{ form.isbn }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Select Category</label>
+                {{ form.category }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Total Copies</label>
+                {{ form.total_copy }}
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Upload Image</label>
+                {{ form.image }}
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-primary px-5">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 {% endblock %}

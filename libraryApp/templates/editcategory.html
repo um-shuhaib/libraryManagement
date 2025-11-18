@@ -1,7 +1,7 @@
 {% extends 'dashboard.html' %}
 
 {% block main %}
-                <div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
+<!-- <div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
                     <div class="">
                         <form action="" method="post">
                             {% csrf_token %}
@@ -10,5 +10,28 @@
                             <input type="submit" name="" id="" class="btn btn-primary m-3">
                         </form>
                     </div>
-                </div>
+                </div> -->
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-sm p-4 mb-5" style="border-radius: 12px;">
+                <h2 class="text-center fw-bold mb-4">Edit Category</h2>
+
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="text" name="category" id="category" class="form-control form-control-lg"
+                            placeholder="Enter category name" value="{{category.category}}" required>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-primary px-5">Add</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

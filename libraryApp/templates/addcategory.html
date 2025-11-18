@@ -1,7 +1,7 @@
 {% extends 'dashboard.html' %}
 
 {% block main %}
-                <div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
+<!-- <div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
                     <div class="">
                         <form action="" method="post">
                             {% csrf_token %}
@@ -25,5 +25,57 @@
                         {% endfor %}
 
                     </div>
+                </div> -->
+<div class="container py-5">
+
+    <!-- Add Category Card -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-sm p-4 mb-5" style="border-radius: 12px;">
+                <h2 class="text-center fw-bold mb-4">Add New Category</h2>
+
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="text" name="category" id="category" class="form-control form-control-lg"
+                            placeholder="Enter category name" required>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-primary px-5">Add</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Category List Section -->
+    <h2 class="text-center fw-bold mb-4">Categories</h2>
+
+    <div class="row g-4 justify-content-center">
+
+        {% for c in category %}
+        <div class="col-md-3 px-5">
+            <div class="card shadow-sm border-0 " style="border-radius: 12px;">
+                <div class="card-body text-center bg-secondary text-white" style="border-radius: 12px;">
+
+                    <h4 class="mb-3 fw-bold">{{ c.category }}</h4>
+
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{% url 'edit' c.id %}" class="btn btn-light btn-sm px-4">Edit</a>
+                        <a href="{% url 'deletecategory' c.id %}" class="btn btn-outline-light btn-sm px-4">Delete</a>
+                    </div>
+
                 </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+
 {% endblock %}
