@@ -7,6 +7,8 @@ from libraryApp.models import User,Category,Book,Issue
 from django.contrib.auth import authenticate,login,logout
 from datetime import date, timedelta
 from django.contrib import messages
+from libraryApp.authentication import login_required
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 def send_otp(user_instance):
@@ -67,7 +69,8 @@ class LoginView(View):
         else:
             messages.warning(request,"Invalid Credentials")
             return redirect("login")
-        
+
+@method_decorator(login_required,name="dispatch")     
 class DashboardView(View):
     def get(self,request):
         books=Book.objects.all()
@@ -119,6 +122,7 @@ class ChangePasswordView(View):
         messages.success(request,"Password Changed Succefully")
         return redirect("login")
 
+@method_decorator(login_required,name="dispatch")
 class AddCategoryView(View):
     def get(self,request):
         category=Category.objects.all()
@@ -129,7 +133,7 @@ class AddCategoryView(View):
         messages.success(request,"New Category Added")
         return redirect("category")
         
-    
+@method_decorator(login_required,name="dispatch")
 class AddBookView(View):
     def get(self,request):
         form=AddBookForm()
@@ -150,13 +154,15 @@ class AddBookView(View):
         else:
             messages.error(request,"Book Not Added")
             return redirect("book")
-
+        
+@method_decorator(login_required,name="dispatch")
 class IssueBookView(View):
     def get(self, request):
         books=Book.objects.filter(avl_copy__gt = 0)
         issued=Issue.objects.all()
         return render(request,"issuebook.html",{"books":books,"issued":issued})
 
+@method_decorator(login_required,name="dispatch")
 class IssueUserView(View):
     def get(self,request,**kwargs):
         book=Book.objects.get(id=kwargs.get("id"))
@@ -173,7 +179,8 @@ class IssuedView(View):
         book.save()
         messages.success(request,"Book Issued")
         return redirect("issue")
-
+    
+@method_decorator(login_required,name="dispatch")
 class UpdateBookView(View):
     def get(self,request,**kwargs):
         book=Book.objects.get(id=kwargs.get("id"))
@@ -192,14 +199,16 @@ class UpdateBookView(View):
         else:
             messages.error(request,"Not updated")
             return redirect("update")
-        
+
+@method_decorator(login_required,name="dispatch")     
 class DeleteBookView(View):
     def get(self,request,**kwargs):
         book=Book.objects.get(id=kwargs.get("id"))
         book.delete()
         messages.success(request,"Book Deleted")
         return redirect("book")
-    
+
+@method_decorator(login_required,name="dispatch")  
 class EditCategoryView(View):
     def get(self,request,**kwargs):
         category=Category.objects.get(id=kwargs.get("id"))
@@ -212,13 +221,15 @@ class EditCategoryView(View):
         messages.success(request,"Category Edited")
         return redirect("category")
 
+@method_decorator(login_required,name="dispatch")
 class DeleteCategoryView(View):
     def get(self,request,**kwargs):
         cat=Category.objects.get(id=kwargs.get("id"))
         cat.delete()
         messages.success(request,"Category Deleted")
         return redirect("category")
-    
+
+@method_decorator(login_required,name="dispatch")
 class returnBookView(View):
     def get(self,request,**kwargs):
         issue=Issue.objects.get(id=kwargs.get("id"))
@@ -240,11 +251,13 @@ class ReturnAcceptView(View):
         messages.success(request,"Book Returned")
         return redirect("issue")
 
+@method_decorator(login_required,name="dispatch")
 class UserDetailsView(View):
     def get(self,request):
         users=User.objects.filter(role="user")
         return render(request,"userdetail.html",{"users":users})
-    
+
+@method_decorator(login_required,name="dispatch")    
 class UserUpdateView(View):
     def get(self,request,**kwargs):
         user=User.objects.get(id=kwargs.get("id"))
@@ -260,7 +273,8 @@ class UserUpdateView(View):
         else:
             messages.error(request,"User Not Updated")
             return redirect("userupdate")
-        
+
+@method_decorator(login_required,name="dispatch")    
 class DeleteUserView(View):
     def get(self,request,**kwargs):
         user=User.objects.get(id=kwargs.get("id"))
