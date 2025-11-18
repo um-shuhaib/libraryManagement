@@ -1,7 +1,78 @@
 {% extends 'dashboard.html' %}
 
 {% block main %}
-<div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
+<div class="container my-5 d-flex justify-content-center">
+    <div class="card shadow-lg p-4" style="border-radius: 15px; max-width: 700px; width: 100%;">
+
+        <h3 class="text-center fw-bold mb-4">Returning Book Details</h3>
+
+        <div class="row">
+
+            <!-- Book Image Section -->
+            <div class="col-md-4 text-center d-flex flex-column align-items-center justify-content-center">
+                <img src="{{ issue.book.image.url }}" 
+                     class="rounded shadow-sm"
+                     style="height: 220px; width: 160px; object-fit: cover;">
+                
+                <h5 class="mt-3 fw-bold">{{ issue.book.title }}</h5>
+            </div>
+
+            <!-- Book Details -->
+            <div class="col-md-8 d-flex flex-column justify-content-center ps-md-5 mt-4 mt-md-0">
+
+                <p class="mb-2">
+                    <span class="fw-bold text-secondary">Issued To:</span> 
+                    {{ issue.user }} 
+                    <span class="text-muted">(+91 {{ issue.user.phone }})</span>
+                </p>
+
+                <p class="mb-2">
+                    <span class="fw-bold text-secondary">Author:</span> 
+                    {{ issue.book.author }}
+                </p>
+
+                <p class="mb-2">
+                    <span class="fw-bold text-secondary">Category:</span>
+                    {% for cat in issue.book.category.all %}
+                        {{ cat.category }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+
+                <p class="mb-2">
+                    <span class="fw-bold text-secondary">ISBN:</span> 
+                    {{ issue.book.isbn }}
+                </p>
+
+                <p class="mb-2">
+                    <span class="fw-bold text-secondary">Fine:</span>
+                    {% if issue.fine > 0 %}
+                        <span class="text-danger fw-bold">₹{{ issue.fine }}</span>
+                    {% else %}
+                        <span class="text-success fw-bold">No Fine</span>
+                    {% endif %}
+                </p>
+
+                <p class="mb-2">
+                    <span class="fw-bold text-secondary">Status:</span> 
+                    <span class="text-uppercase">{{ issue.status }}</span>
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Return Button -->
+        <div class="text-center mt-4">
+            <a href="{% url 'acceptreturn' issue.id %}" 
+               class="btn btn-primary px-5 py-2 fw-bold">
+                Return Book
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<!-- <div class="d-flex flex-column w-100 vh-100 align-items-center justify-content-center">
     <h3>Returning Book Details</h3>
     <div class="d-flex ">
         <div class=" d-flex flex-column justify-content-center align-items-center">
@@ -26,7 +97,7 @@
     </div>
     <a href="{% url 'acceptreturn' issue.id %}" class="btn btn-secondary">Return</a>
 
-</div>
+</div> -->
 <div class="container-fluid px-4">
         <div id="section-table" class="card mb-4">
             <div class="card-header">
