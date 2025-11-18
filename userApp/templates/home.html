@@ -29,13 +29,15 @@
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a></li>
-                        {% if request.user.role == "staff" %}
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'dashboard' %}">Dashboard</a></li>
-                        {% endif %}
-                        <!-- <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    {% if request.user.role == "staff" %}
+                    <li class="nav-item"><a class="nav-link active" aria-current="page"
+                            href="{% url 'dashboard' %}">Dashboard</a></li>
+                    {% endif %}
+                    <!-- <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li> -->
-                        <li class="nav-item dropdown">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -46,25 +48,25 @@
                             <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                         </ul>
                     </li>
-                    </ul>
+                </ul>
 
             </div>
         </div>
     </nav>
-{% for i in messages %}
-     {% if i.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    {% for i in messages %}
+    {% if i.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
     <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
         <strong>{{i}}</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {% endif %}
-     {% if i.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    {% if i.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
     <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
         <strong>{{i}}</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {% endif %}
-     {% if i.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+    {% if i.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
     <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
         <strong>{{i}}</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -74,12 +76,13 @@
     {% block main %}
     <!-- Header-->
     <header class="py-5">
-        <div class="container px-lg-5">
+        <div class="container px-lg-5 mt-5">
             <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
                 <div class="m-4 m-lg-5">
                     <h1 class="display-5 fw-bold">Welcome to Our Library!</h1>
                     <p class="fs-4">Discover a world of knowledge, imagination, and inspiration.
-Browse our vast collection of books, explore new genres, and start your reading journey today.</p>
+                        Browse our vast collection of books, explore new genres, and start your reading journey today.
+                    </p>
                     <a class="btn btn-primary btn-lg" href="#books">Explore</a>
                 </div>
             </div>
@@ -96,20 +99,20 @@ Browse our vast collection of books, explore new genres, and start your reading 
                         <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                             <div class="feature  bg-gradient text-white rounded-3 mb-4 mt-n4">
                                 <!-- <i class="bi bi-collection"></i> -->
-                                 <img src="{{book.image.url}}" alt="img" height="200px" width="150px">
+                                <img src="{{book.image.url}}" alt="img" height="200px" width="150px">
                             </div>
                             <h2 class="fs-4 fw-bold font-monospace text-primary">{{book.title}}</h2>
                             <h2 class="fs-5 fw-bold">{{book.isbn}}</h2>
                             <p class=" fw-bold fst-italic">by {{book.author}}</p>
                             <p class="mb-0 fw-bold ">
                                 {% for cat in book.category.all %}
-                                    {{ cat.category }}{% if not forloop.last %}, {% endif %}
+                                {{ cat.category }}{% if not forloop.last %}, {% endif %}
                                 {% endfor %}</p>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
-                
+
             </div>
         </div>
     </section>
@@ -130,15 +133,15 @@ Browse our vast collection of books, explore new genres, and start your reading 
     <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
 
     <script>
-document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function () {
 
-    // Initialize ALL tables with class="datatable"
-    document.querySelectorAll('.datatable').forEach(function(table) {
-        new simpleDatatables.DataTable(table);
-    });
+            // Initialize ALL tables with class="datatable"
+            document.querySelectorAll('.datatable').forEach(function (table) {
+                new simpleDatatables.DataTable(table);
+            });
 
-});
-</script>
+        });
+    </script>
 </body>
 
 </html>
