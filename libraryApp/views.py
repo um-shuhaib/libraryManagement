@@ -55,7 +55,7 @@ class LoginView(View):
         if res:
             login(request,res)
             if res.role=="user":
-                return HttpResponse("User login Successfull")
+                return redirect("home")
             else:
                 return redirect("dashboard")
 

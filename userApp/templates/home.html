@@ -48,7 +48,26 @@
             </div>
         </div>
     </nav>
-
+{% for i in messages %}
+     {% if i.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+        <strong>{{i}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+     {% if i.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <strong>{{i}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+     {% if i.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+    <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+        <strong>{{i}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
     {% block main %}
     <!-- Header-->
     <header class="py-5">

@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("",views.UserHomeView.as_view(),name="home"),
     path("profile",views.ProfileView.as_view(),name="userprofile"),
+    path("profile/update/<int:id>",views.UserUpdateView.as_view(),name="userprofileupdate"),
     
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
