@@ -129,9 +129,13 @@ class AddCategoryView(View):
         return render(request,"addcategory.html",{"category":category})
     def post(self,request):
         category=request.POST.get("category")
-        Category.objects.create(category=category)
-        messages.success(request,"New Category Added")
-        return redirect("category")
+        try:
+            Category.objects.create(category=category)
+            messages.success(request,"New Category Added")
+            return redirect("category")
+        except:
+            messages.warning(request,"Error - Already Available")
+            return redirect("category")
         
 @method_decorator(login_required,name="dispatch")
 class AddBookView(View):
