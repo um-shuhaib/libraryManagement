@@ -6,6 +6,8 @@ from django.core.mail import send_mail,settings
 from libraryApp.models import User,Category,Book,Issue
 from django.contrib.auth import authenticate,login,logout
 from datetime import date, timedelta
+from django.contrib import messages
+
 # Create your views here.
 def send_otp(user_instance):
     user_instance.generate_otp()
@@ -23,9 +25,10 @@ class RegisterView(View):
             user_instance.save()
             send_otp(user_instance)
             send_mail("Confirm The OTP",user_instance.otp,settings.EMAIL_HOST_USER,[user_instance.email])
+            messages.success(request,"Email OTP send Succefully")
             return redirect("otpverify")
-            # return HttpResponse("otp verification")
         else:
+            messages.warning(request,"Not Registered : Must be unique username and email and confirm the password correctly")
             return redirect("register")
             # return HttpResponse("not valid")
 
@@ -40,13 +43,14 @@ class VerifyOTPView(View):
             user_instance.is_verified=True
             user_instance.otp=""
             user_instance.save()
-            # return redirect("login")
+            messages.success(request,"OTP Verification Succeful")
             return redirect("login")
         except:
+            messages.warning(request,"Invalid OTP - Try Again")
             return redirect("otpverify")
+        
 class LoginView(View):
     def get(self,request):
-        # form=LoginForm()
         return render(request,"login.html")
     def post(self,request):
         username=request.POST.get("username")
@@ -54,13 +58,15 @@ class LoginView(View):
         res = authenticate(request,username=username,password=password)
         if res:
             login(request,res)
+            messages.success(request,"Login Succeful")
             if res.role=="user":
                 return redirect("home")
             else:
                 return redirect("dashboard")
 
         else:
-            return HttpResponse("login Not Successfull")
+            messages.warning(request,"Invalid Credentials")
+            return redirect("login")
         
 class DashboardView(View):
     def get(self,request):
@@ -72,13 +78,21 @@ class MailVerifyView(View):
         return render(request,"password.html")
     
     def post(self,request):
-        user=User.objects.get(email=request.POST.get("email"))
+        try:
+            user=User.objects.get(email=request.POST.get("email"))
+        except:
+            messages.error(request,"Invalid Credential")
+            return redirect("password")
+
         if user.is_active:
             send_otp(user)
             send_mail("Confirm The OTP for Restting the Password",user.otp,settings.EMAIL_HOST_USER,[user.email])
+            messages.success(request,"Email-OTP Send Succefully")
             return redirect("otp-password")
         else:
+            messages.error(request,"Invalid Credential")
             return redirect("password")
+        
 class OtpPasswordView(View):
     def get(self,request):
         return render(request,"otp-password.html")
@@ -89,8 +103,10 @@ class OtpPasswordView(View):
             
             user_instance.otp=""
             user_instance.save()
+            messages.success(request,"OTP Verification Succeful")
             return redirect("change-password",user=user_instance.id)
         except:
+            messages.warning(request,"OTP is Invalid")
             return redirect("otp-password")
         
 class ChangePasswordView(View):
@@ -100,6 +116,7 @@ class ChangePasswordView(View):
         user=User.objects.get(id=kwargs.get("user"))
         user.set_password(request.POST.get("password"))        
         user.save()
+        messages.success(request,"Password Changed Succefully")
         return redirect("login")
 
 class AddCategoryView(View):
@@ -109,6 +126,7 @@ class AddCategoryView(View):
     def post(self,request):
         category=request.POST.get("category")
         Category.objects.create(category=category)
+        messages.success(request,"New Category Added")
         return redirect("category")
         
     
@@ -127,6 +145,10 @@ class AddBookView(View):
             book.save()
             # Step 2: Save M2M categories
             form_instance.save_m2m()
+            messages.success(request,"New Book Added")
+            return redirect("book")
+        else:
+            messages.error(request,"Book Not Added")
             return redirect("book")
 
 class IssueBookView(View):
@@ -149,6 +171,7 @@ class IssuedView(View):
         Issue.objects.create(user=user,book=book,due_date=date.today() + timedelta(days=7))
         book.avl_copy -= 1
         book.save()
+        messages.success(request,"Book Issued")
         return redirect("issue")
 
 class UpdateBookView(View):
@@ -164,12 +187,17 @@ class UpdateBookView(View):
             book.user=request.user
             book.save()
             form_instance.save_m2m()
+            messages.success(request,"Book Updated")
             return redirect("book")
+        else:
+            messages.error(request,"Not updated")
+            return redirect("update")
         
 class DeleteBookView(View):
     def get(self,request,**kwargs):
         book=Book.objects.get(id=kwargs.get("id"))
         book.delete()
+        messages.success(request,"Book Deleted")
         return redirect("book")
     
 class EditCategoryView(View):
@@ -181,13 +209,16 @@ class EditCategoryView(View):
         cat=request.POST.get("category")
         category.category=cat
         category.save()
+        messages.success(request,"Category Edited")
         return redirect("category")
 
 class DeleteCategoryView(View):
     def get(self,request,**kwargs):
         cat=Category.objects.get(id=kwargs.get("id"))
         cat.delete()
+        messages.success(request,"Category Deleted")
         return redirect("category")
+    
 class returnBookView(View):
     def get(self,request,**kwargs):
         issue=Issue.objects.get(id=kwargs.get("id"))
@@ -206,12 +237,14 @@ class ReturnAcceptView(View):
         issue.returned_date=date.today()
         issue.fine = 0
         issue.save()
+        messages.success(request,"Book Returned")
         return redirect("issue")
 
 class UserDetailsView(View):
     def get(self,request):
         users=User.objects.filter(role="user")
         return render(request,"userdetail.html",{"users":users})
+    
 class UserUpdateView(View):
     def get(self,request,**kwargs):
         user=User.objects.get(id=kwargs.get("id"))
@@ -222,17 +255,25 @@ class UserUpdateView(View):
         form_instance=UserUpdationForm(request.POST,request.FILES,instance=user)
         if form_instance.is_valid():
             form_instance.save()
+            messages.success(request,"User Updated")
             return redirect("user")
+        else:
+            messages.error(request,"User Not Updated")
+            return redirect("userupdate")
+        
 class DeleteUserView(View):
     def get(self,request,**kwargs):
         user=User.objects.get(id=kwargs.get("id"))
         user.delete()
+        messages.success(request,"User Removed")
         return redirect("user")
     
 class LogoutView(View):
     def get(self,request):
         logout(request)
+        messages.success(request,"User Logout")
         return redirect("login")
+    
 class ProfileView(View):
     def get(self,request):
         user=request.user
@@ -249,4 +290,8 @@ class ProfileUpdateView(View):
         form_instance=UserUpdationForm(request.POST,request.FILES,instance=user)
         if form_instance.is_valid():
             form_instance.save()
+            messages.success(request,"Profile Updated")
             return redirect("profile")
+        else:
+            messages.error(request,"Profile Not Updated")
+            return redirect("profileupdate")

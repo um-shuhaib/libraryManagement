@@ -3,7 +3,7 @@ from django.views import View
 from libraryApp.models import Book,Issue,User
 from datetime import date, timedelta
 from libraryApp.forms import UserUpdationForm
-
+from django.contrib import messages
 
 # Create your views here.
 class UserHomeView(View):
@@ -16,14 +16,18 @@ class ProfileView(View):
         user=request.user
         history=Issue.objects.filter(user=user)
         return render(request,"userprofile.html",{"user":user,"history":history})
+    
 class UserUpdateView(View):
     def get(self,request,**kwargs):
         user=User.objects.get(id=kwargs.get("id"))
         form=UserUpdationForm(instance=user)
-        return render(request,"updateuser.html",{"form":form})
+        return render(request,"edituserprofile.html",{"form":form})
     def post(self,request,**kwargs):
         user=User.objects.get(id=kwargs.get("id"))
         form_instance=UserUpdationForm(request.POST,request.FILES,instance=user)
         if form_instance.is_valid():
             form_instance.save()
             return redirect("userprofile")
+        else:
+            messages.error(request,"User Not Updated")
+            return redirect("userprofileupdate")

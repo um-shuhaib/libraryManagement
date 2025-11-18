@@ -98,25 +98,25 @@
             <main>
 
                 {% for i in messages %}
-     {% if i.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-        <strong>{{i}}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% endif %}
-     {% if i.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-        <strong>{{i}}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% endif %}
-     {% if i.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
-    <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
-        <strong>{{i}}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% endif %}
-    {% endfor %}
+                {% if i.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                    <strong>{{i}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+                {% if i.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+                    <strong>{{i}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+                {% if i.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+                    <strong>{{i}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+                {% endfor %}
                 {% block main %}
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Dashboard</h1>
@@ -125,15 +125,15 @@
                     </ol>
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
-                                <a href="#section-table">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body fw-bolder">{{total_copies}}</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <p class="small text-white">Total Books</p>
-                                    <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
+                            <a href="#section-table">
+                                <div class="card bg-primary text-white mb-4">
+                                    <div class="card-body fw-bolder">{{total_copies}}</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <p class="small text-white">Total Books</p>
+                                        <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
                         </div>
 
                         <div class="col-xl-3 col-md-6">
@@ -158,13 +158,13 @@
                             <div class="card bg-danger text-white mb-4">
                                 <div class="card-body">{{overdue_books}}</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <p class="small text-white" >Overdues</p>
+                                    <p class="small text-white">Overdues</p>
                                     <!-- <div class="small text-white"><i class="fas fa-angle-right"></i></div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div id="section-table" class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
@@ -202,21 +202,21 @@
                                     {% for book in books %}
                                     <tr>
                                         <td>
-                                            <img src="{{book.image.url}}"  height="50px" width="45px" alt="img">
+                                            <img src="{{book.image.url}}" height="50px" width="45px" alt="img">
                                         </td>
                                         <td>{{book.title}}</td>
                                         <td>{{book.author}}</td>
                                         <td>{{book.isbn}}</td>
                                         <td>
                                             {% for cat in book.category.all %}
-                                                {{ cat.category }}{% if not forloop.last %}, {% endif %}
+                                            {{ cat.category }}{% if not forloop.last %}, {% endif %}
                                             {% endfor %}
                                         </td>
                                         <td>{{book.total_copy}}</td>
                                         <td>{{book.avl_copy}}</td>
                                         <td>{{book.user}}</td>
                                         <td>{{book.added_on}}</td>
-                                        
+
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -231,7 +231,7 @@
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; SHUHAIB P M 2023</div>
                         <div class="text-muted">
-                           
+
                             Library Management System
                         </div>
                     </div>
@@ -250,15 +250,15 @@
     <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
 
     <script>
-document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function () {
 
-    // Initialize ALL tables with class="datatable"
-    document.querySelectorAll('.datatable').forEach(function(table) {
-        new simpleDatatables.DataTable(table);
-    });
+            // Initialize ALL tables with class="datatable"
+            document.querySelectorAll('.datatable').forEach(function (table) {
+                new simpleDatatables.DataTable(table);
+            });
 
-});
-</script>
+        });
+    </script>
 </body>
 
 </html>
