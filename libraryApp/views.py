@@ -244,12 +244,19 @@ class returnBookView(View):
 class ReturnAcceptView(View):
     def get(self,request,**kwargs):
         issue=Issue.objects.get(id=kwargs.get("id"))
-        issue.status="returned"
-        issue.returned_date=date.today()
-        issue.fine = 0
-        issue.save()
-        messages.success(request,"Book Returned")
-        return redirect("issue")
+        if issue.status == "issued":
+            issue.status="returned"
+            issue.returned_date=date.today()
+            issue.fine = 0
+            book = issue.book
+            book.avl_copy += 1
+            book.save()
+            issue.save()
+            messages.success(request,"Book Returned")
+            return redirect("issue")
+        else:
+            messages.warning(request, "This book is already returned.")
+            return redirect("issue")
 
 @method_decorator(login_required,name="dispatch")
 class UserDetailsView(View):
