@@ -13,7 +13,7 @@ class User(AbstractUser):
     )
     phone=models.CharField(max_length=15)
     role=models.CharField(max_length=100,choices=option,default="user")
-    profile=models.ImageField(upload_to="profile",default="profile/default.jpeg",null=True,blank=True)
+    profile=models.ImageField(upload_to="profile",default="profile/default.jpg",null=True,blank=True)
     otp=models.CharField(max_length=20)
     is_verified=models.BooleanField(default=False)
 
@@ -35,7 +35,7 @@ class Book(models.Model):
     title=models.CharField(max_length=100)
     author=models.CharField(max_length=20)
     isbn=models.IntegerField()
-    image=models.ImageField(upload_to="books",default="books/default.jpeg",null=True,blank=True)
+    image=models.ImageField(upload_to="books",default="books/default.jpg",null=True,blank=True)
     category=models.ManyToManyField(Category,related_name="bookCategory")
     total_copy=models.IntegerField()
     avl_copy=models.IntegerField()
