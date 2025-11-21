@@ -5,7 +5,9 @@ def library_status(request):
     total_books = Book.objects.count()
     total_copies = Book.objects.aggregate(total=models.Sum("total_copy"))["total"] or 0
     avl_books = Book.objects.aggregate(total=models.Sum("avl_copy"))["total"] or 0
-    issued_books=Issue.objects.filter(status="issued").count()
+    # issued_books=Issue.objects.filter(status="issued").count()
+    issued_books = Issue.objects.exclude(status="returned").count()
+
     overdue_books=Issue.objects.filter(status="overdue").count()
 
 
