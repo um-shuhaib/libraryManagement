@@ -48,4 +48,6 @@ urlpatterns = [
     path("profile/update/<int:id>",views.ProfileUpdateView.as_view(),name="profileupdate"),
     path("home/",include('userApp.urls')),
 
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+if settings.DEBUG: # Check if DEBUG is True (local development)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

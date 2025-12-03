@@ -118,7 +118,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
+
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+
+# Where `collectstatic` will place the production static files
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Optional: if you keep a global project-level static folder (not app-level),
+# add it here so collectstatic also picks files from BASE_DIR/static/
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# Media files (user uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
